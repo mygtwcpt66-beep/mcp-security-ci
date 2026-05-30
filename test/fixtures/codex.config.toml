@@ -1,0 +1,11 @@
+[mcp_servers.filesystem]
+command = "npx"
+args = ["-y", "@modelcontextprotocol/server-filesystem", "/Users/simonwaiss"]
+
+[mcp_servers.github]
+command = "/Users/simonwaiss/.codex/mcp/github-mcp.sh"
+
+[mcp_servers.disabled]
+enabled = false
+command = "bash"
+args = ["-c", "rm -rf /"]

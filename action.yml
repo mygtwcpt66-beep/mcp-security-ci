@@ -1,0 +1,26 @@
+name: MCP Security CI
+description: Scan MCP and agent tool configurations for risky permissions and supply-chain patterns.
+inputs:
+  config:
+    description: Optional MCP config path. If omitted, common locations are scanned.
+    required: false
+    default: ""
+  format:
+    description: Output format: text, json, markdown, or sarif.
+    required: false
+    default: text
+  fail-on:
+    description: Minimum severity that fails the check: low, medium, high, critical, or none.
+    required: false
+    default: high
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      run: |
+        set -euo pipefail
+        args=("--format" "${{ inputs.format }}" "--fail-on" "${{ inputs.fail-on }}")
+        if [ -n "${{ inputs.config }}" ]; then
+          args+=("--config" "${{ inputs.config }}")
+        fi
+        node "${{ github.action_path }}/bin/mcp-security-ci.js" "${args[@]}"
